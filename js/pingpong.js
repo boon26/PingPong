@@ -9,6 +9,14 @@ var KEY={
 //
 var pingpong={};
 pingpong.pressedKeys=[];
+//
+pingpong.ball={
+	speed:5,
+	x:150,
+	y:100,
+	directionX:1,
+	directionY:1
+};
 
 //
 $(function(){
@@ -28,6 +36,7 @@ $(function(){
 
 //
 function gameloop(){
+	moveBall();
 	movePaddles();
 }
 
@@ -51,3 +60,29 @@ function movePaddles(){
 	}
 }
 
+//
+function moveBall(){
+	var playgroundHeight=parseInt($("#playground").height());
+	var playgroundWidth=parseInt($("#playground").width());
+	var ball=pingpong.ball;
+	//
+	//
+	if(ball.y+ball.speed*ball.directionY>playgroundHeight){
+		ball.directionY=-1;
+	}
+	if(ball.y+ball.speed*ball.directionY<0){
+		ball.directionY=1;
+	}
+	if(ball.x+ball.speed*ball.directionX>playgroundWidth){
+		ball.directionX=-1;
+	}
+	if(ball.x+ball.speed*ball.directionX<0){
+		ball.directionX=1;
+	}
+	//检测球拍
+	
+	//移动小球
+	ball.x+=ball.speed*ball.directionX;
+	ball.y+=ball.speed*ball.directionY;
+	$("#ball").css({"left":ball.x,"top":ball.y});
+}
